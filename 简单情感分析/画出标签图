@@ -1,0 +1,42 @@
+import seaborn as sns
+#画出标签图
+def hashtag_extract(x):
+    hashtags = []
+    # Loop over the words in the tweet
+    for i in x:
+        #(\w+):字母数字及下划线 +多个字母（单词）
+        ht = re.findall(r"(\w+)", i)
+        hashtags.append(ht)
+ 
+    return hashtags
+
+# extracting hashtags from non racist/sexist tweets
+HT_positive = hashtag_extract(trainData['review'][trainData['label'] == 0])
+ 
+# extracting hashtags from racist/sexist tweets
+HT_negative = hashtag_extract(trainData['review'][trainData['label'] == 1])
+ 
+# unnesting list
+HT_positive = sum(HT_positive,[])
+HT_negative = sum(HT_negative,[])
+
+# 画积极标签
+import nltk
+a = nltk.FreqDist(HT_positive)
+d = pd.DataFrame({'Hashtag': list(a.keys()),'Count': list(a.values())})
+# selecting top 10 most frequent hashtags     
+d = d.nlargest(columns="Count", n = 10)     #前十
+plt.figure(figsize=(16,5))
+ax = sns.barplot(data=d, x= "Hashtag", y = "Count")
+ax.set(ylabel = 'Count')
+plt.show()
+
+# 画消极标签
+b = nltk.FreqDist(HT_negative)
+e = pd.DataFrame({'Hashtag': list(b.keys()),'Count': list(b.values())})
+# selecting top 10 most frequent hashtags
+e = e.nlargest(columns="Count", n = 10)   
+plt.figure(figsize=(16,5))
+ax = sns.barplot(data=e, x= "Hashtag", y = "Count")
+ax.set(ylabel = 'Count')
+plt.show()
