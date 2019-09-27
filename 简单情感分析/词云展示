@@ -1,0 +1,28 @@
+##词云显示当前文本中的词
+#all_words = ' '.join([text for text in trainVocabulary])
+#
+#from wordcloud import WordCloud
+#
+#wordcloud = WordCloud(width=800, height=500, random_state=21, max_font_size=110).generate(all_words) 
+#plt.figure(figsize=(10, 7))
+#plt.imshow(wordcloud, interpolation="bilinear")
+#plt.axis('off')
+#plt.show()
+
+#评论积极的词语
+#positiveWord = ' '.join([text for text in trainData['review'][trainData['label']==0]])
+#from wordcloud import WordCloud
+#wordcloud = WordCloud(width=800, height=500, random_state=21, max_font_size=110).generate(positiveWord) 
+#plt.figure(figsize=(10, 7))
+#plt.imshow(wordcloud, interpolation="bilinear")
+#plt.axis('off')
+#plt.show()
+
+##评论积极的词语
+#negativeWord = ' '.join([text for text in trainData['review'][trainData['label']==1]])
+#from wordcloud import WordCloud
+#wordcloud = WordCloud(width=800, height=500, random_state=21, max_font_size=110).generate(negativeWord) 
+#plt.figure(figsize=(10, 7))
+#plt.imshow(wordcloud, interpolation="bilinear")
+#plt.axis('off')
+#plt.show()
