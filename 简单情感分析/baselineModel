@@ -38,5 +38,30 @@ prediction_int = prediction_int.astype(np.int)
 
 print("回归f",f1_score(yvalid, prediction_int)) # calculating f1 score
 #
+
+#使用贝叶斯NB
+from sklearn.model_selection import  train_test_split,KFold
+#from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB,BernoulliNB,MultinomialNB
+from sklearn.metrics import roc_auc_score,auc,roc_curve
+#from sklearn.svm import SVC
+#import xgboost as xgb
+
+X_train_part,X_test_part,y_train_part,y_test_part = train_test_split(train_bow,trainData['label'],test_size = 0.2)
+
+clf = MultinomialNB()
+clf.fit(X_train_part,y_train_part)
+
+y_pred = clf.predict_proba(X_train_part)
+fpr, tpr, thresholds = roc_curve(y_train_part, y_pred[:,1])
+print(auc(fpr, tpr))  ###0.9992496306904572
+
+y_pred = clf.predict_proba(X_test_part)
+fpr, tpr, thresholds = roc_curve(y_test_part, y_pred[:,1])
+print(auc(fpr, tpr)) ###0.8613719824212871
+
+clf = MultinomialNB() 
+clf.fit(train_bow,trainData['label']) 
+y_pred_text = clf.predict_proba(test_bow) 
 test_pred = logisticRegression.predict_proba(test_bow)
 print("这里P:",test_pred)
