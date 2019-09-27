@@ -1,0 +1,72 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Sep 26 07:59:54 2019
+
+@author: dabing
+"""
+'''
+导入数据、清洗数据、观察数据、建立模型、预测数据
+阶段为导入数据，使用pands导入数据，为dataFrame形势
+'''
+#数据预处理类
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import re
+#sklearn类
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import f1_score
+from sklearn.feature_extraction.text import TfidfTransformer,TfidfVectorizer
+#-----step1----读取数据
+#engine 中文是引擎的意思，设置为Python也就能使用Python的方式打开
+trainData = pd.read_csv('F:/桌面/nlp/情感分析/train.csv',engine = 'python')
+testData = pd.read_csv('F:/桌面/nlp/情感分析/test.csv',engine = 'python')
+#.info()查看数据集信息，可统计出缺失值，行数，列数等
+trainData.info()
+testData.info()
+#-----step2----数据预处理
+#过滤缺失值 axis=0滤除行 axis=1滤除列，此处为删除
+trainData = trainData.dropna(axis=0,subset = ['label'])
+
+#标签进行二值化,使用的是映射的方式，先设置一个字典包含映射对象，然后使用指定列进行操作，新位置
+#binaryMap = {'Positive':0,'Negative':1}
+#trainData['binaryLabel'] = trainData['label'].map(binaryMap)
+#在原位置进行映射改变，使用替代的方式，原位置
+trainData['label'] = trainData['label'].replace(to_replace=['Positive', 'Negative'], value=[0, 1])
+
+#消除无关字符，使用正则化匹配符
+#[^a-zA-Z]：[^ ] 除以外的字符，a-zA-Z：全部大小写英文字母
+def filterFun(line):
+    #re.sub(正则/被替代,新值，原始序列)
+    line = re.sub(r'[^a-zA-Z]',' ',line)
+    #全部转为小写（str.lower()）
+    line = line.lower()
+    return line
+    
+trainData['review'] = trainData['review'].apply(filterFun)
+testData['review'] = testData['review'].apply(filterFun)
+#移除短单词，此处小于3的都移除
+trainData['review'] = trainData['review'].apply(lambda x: ' '.join([w for w in x.split() if len(w) > 3]))
+testData['review'] = testData['review'].apply(lambda x: ' '.join([w for w in x.split() if len(w) > 3]))
+##分词 split() 默认是空格
+#trainData['review'] = trainData['review'].str.split()
+#testData['review'] = testData['review'].str.split()
+
+##提取词干
+#'''
+#提取词干说的是基于规则从单词中去除后缀的过程。例如，play，player，played，plays，playing都是play的变种
+#'''
+from nltk.stem.porter import PorterStemmer
+stemmer = PorterStemmer()
+trainData['review'] = trainData['review'].apply(lambda x: [stemmer.stem(i) for i in x]) #stemming
+testData['review'] = testData['review'].apply(lambda x: [stemmer.stem(i) for i in x]) #stemming
+
+##分词复原
+#'''
+#分词复原
+#把符号化的词语重新拼回去，这里我们使用最笨的方法就是遍历拼写回去；
+#这里在自然语言处理库nltk没有改版时时可以只用nltk的MosesDetokenizer方法很容易做到，但是更改之后官网时把nltk中的MosesDetokenizer方法删除了的，好像是为了处理兼容性的问题。
+#'''
+trainData['review'] = trainData['review'].apply(lambda x: ' '.join(x)) 
+testData['review'] = trainData['review'].apply(lambda x: ' '.join(x))
