@@ -9,3 +9,34 @@ TF-IDF(term frequency–inverse document frequency),术语频率-逆文档频率
 word Embeddings之类的方法。词嵌入（one-hot encoding）
 在本文中，我使用了Bag-Of-Words和TF-IDF两个方法
 '''
+bowVectory = CountVectorizer(max_df=0.30, max_features=8200, stop_words='english')
+
+combi = trainData.append(testData,ignore_index=True,sort=False)
+bow = bowVectory.fit_transform(combi['review'])
+bowtest = bowVectory.fit_transform(testData['review'])
+
+#print(testData.describe())
+
+#使用LR来构建模型
+train_bow = bow[:6325,:]
+test_bow = bowtest[:2712,]
+
+y = trainData['label'][0:6325]
+#print(y)
+
+#分为测试集和验证集
+xtrain_bow, xvalid_bow, ytrain, yvalid = train_test_split(train_bow, y, random_state=42, test_size=0.3)
+
+logisticRegression = LogisticRegression()
+
+logisticRegression.fit(xtrain_bow,ytrain)
+
+prediction  = logisticRegression.predict_proba(xvalid_bow)
+
+prediction_int = prediction[:,1] >= 0.5
+prediction_int = prediction_int.astype(np.int)
+
+print("回归f",f1_score(yvalid, prediction_int)) # calculating f1 score
+#
+test_pred = logisticRegression.predict_proba(test_bow)
+print("这里P:",test_pred)
