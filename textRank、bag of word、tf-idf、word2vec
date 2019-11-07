@@ -5,6 +5,8 @@ bag of word:词袋模型（类似于 ont-hot 编码，但是一个单词使用�
 https://blog.csdn.net/m0_37744293/article/details/78881231
 
 tf-idf:(Term Frequency词频 Inverse Document Frequency 逆向文档频率)如果词w在一篇文档d中出现的频率高，并且在其他文档中很少出现，
-则认为词w具有很好的区分能力，适合用来把文章d和其他文章区分开来。
+则认为词w具有很好的区分能力，适合用来把文章d和其他文章区分开来。基于bow的，选出高频词后，使用bow表示为向量模式
 此处的逆文档频率是根据较好的语料库来构建的，语料库是怎么构建的？
 https://blog.csdn.net/asialee_bird/article/details/81486700#main-toc
+
+word2vec:(word wmbeddings) 词向量、词嵌入，将词转化为向量表示的模型
