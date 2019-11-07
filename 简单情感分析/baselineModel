@@ -1,6 +1,7 @@
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer,TfidfVectorizer
 '''
 要分析清洗后的数据，就要把它们转换成特征。根据用途来说，文本特征可以使用很多种算法来转换。
@@ -14,6 +15,10 @@ bowVectory = CountVectorizer(max_df=0.30, max_features=8200, stop_words='english
 combi = trainData.append(testData,ignore_index=True,sort=False)
 bow = bowVectory.fit_transform(combi['review'])
 bowtest = bowVectory.fit_transform(testData['review'])
+
+#tf-idf表示
+#tf_idf_transformer = TfidfTransformer()
+#tf_idf = tf_idf_transformer.fit_transform(bowVectory.fit_transform(combi))
 
 #print(testData.describe())
 
