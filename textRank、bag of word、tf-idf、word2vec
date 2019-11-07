@@ -1,7 +1,7 @@
 textRank:主题词集构建方法（意思是选择分词后N个单词作为代表）
 https://www.jianshu.com/p/ffaee5708866
 
-bag of word:词袋模型（一个单词使用一个寄存器表示出现的次数，一个含有n个单词的句子、短文本就有一个N维向量表示）
+bag of word:词袋模型（选出一个单词词典包含N个单词，一个单词使用一个寄存器表示出现的次数，一个句子、短文本就可以用一个N维向量表示）
 https://blog.csdn.net/m0_37744293/article/details/78881231
 
 tf-idf:(Term Frequency词频 Inverse Document Frequency 逆向文档频率)如果词w在一篇文档d中出现的频率高，并且在其他文档中很少出现，
