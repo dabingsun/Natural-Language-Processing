@@ -3,11 +3,14 @@ import jieba
 sentence = '我喜欢画画，但是我也喜欢游泳'
 
 --------分词-------
-#精准jieba.cut(sentence), 精确分词
-#全模式jieba.cut(sentence,cut_all = True)，将所有的可以成词的词语都扫描
-#搜索模式jieba.cut_for_search(sentence)，精确模式的基础上，对长词再次切分
+#精准jieba.cut(sentence), 精确分词，返回一个可迭代类型
+#全模式jieba.cut(sentence,cut_all = True)，将所有的可以成词的词语都扫描，返回一个可迭代类型
+#搜索模式jieba.cut_for_search(sentence)，精确模式的基础上，对长词再次切分，返回一个可迭代类型
 curVucabulary = jieba.cut(sentence)
 final = ''.join(curVucabulary)
+
+jieba.lcut(参数) 返回一个列表类型
+
 
 import jieba.posseg as pseg
 --------标注-------
