@@ -3,8 +3,8 @@ woer2vec、bert、介绍对比：https://www.cnblogs.com/rucwxb/p/10277217.html 
 全称：Bidirectional Encoder Representation from Transformers
 bert源码解读：https://www.jianshu.com/p/22e462f01d8c
 
-自然语言处理：
-第一步，需要将语言（英语、汉语等）转化为计算机可以识别的机器语言（数字或向量表示）。
+#自然语言处理：
+#第一步，需要将语言（英语、汉语等）转化为计算机可以识别的机器语言（数字或向量表示）。
 
 一、one-hot编码（比如：词袋模型bag of word）
 两句话：1：我和小明去游泳  2：小明和小刚去游泳---> 建立一个包含主要关键词的词典，有6个词，{我：1，和：2，小明：3，去：4，游泳：5，小刚：6}，
