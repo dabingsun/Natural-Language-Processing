@@ -6,7 +6,7 @@ bert源码解读：https://www.jianshu.com/p/22e462f01d8c
 自然语言处理：
 第一步，需要将语言（英语、汉语等）转化为计算机可以识别的机器语言（数字或向量表示）。
 
-1：one-hot编码（比如：词袋模型bag of word）
+一、one-hot编码（比如：词袋模型bag of word）
 两句话：1：我和小明去游泳  2：小明和小刚去游泳---> 建立一个包含主要关键词的词典，有6个词，{我：1，和：2，小明：3，去：4，游泳：5，小刚：6}，
 则使用one-hot编码后向量表示为：我和小明去游泳 [111110]，小明和小刚去游泳[011111]，每个句子的表示都是词典的一个映射，大小为词典的长度，
 当前句子中是否包含词典的词，包含则表示为1，否则就为0。
@@ -15,3 +15,11 @@ bert源码解读：https://www.jianshu.com/p/22e462f01d8c
 缺点：
 1 语料多的时候，会导致词典过大，特定单词只出现一次，导致表示向量高维稀疏
 2 由于是按照词典方式，缺乏语境，无法表示词之间的上下文关系
+二、词向量编码（比如 word2vec（cbow,n-gram），单向序列的）
+
+三、bert(Bidirectional Encoder Representation from Transformers:双向编码表示来自Transformers，双向的)
+1.分词 
+tokenization.py 是处理分词的，主要有两个分词器：BasicTokenizer 和 WordpieceTokenizer，另外一个 FullTokenizer 是这两个的结合：先进行 BasicTokenizer 
+得到一个分得比较粗的 token 列表，然后再对每个 token 进行一次 WordpieceTokenizer，得到最终的分词结果。
+对于中文来说，一句话概括：BERT 采取的是「分字」，即每一个汉字都切开。
+啊啊啊
