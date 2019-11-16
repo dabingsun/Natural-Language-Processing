@@ -22,4 +22,5 @@ bert源码解读：https://www.jianshu.com/p/22e462f01d8c  https://cloud.tencent
 	tokenization.py 是处理分词的，主要有两个分词器：BasicTokenizer 和 WordpieceTokenizer，另外一个 FullTokenizer 是这两个的结合：先进行 BasicTokenizer 
 	得到一个分得比较粗的 token 列表，然后再对每个 token 进行一次 WordpieceTokenizer，得到最终的分词结果。
 	对于中文来说，一句话概括：BERT 采取的是「分字」，即每一个汉字都切开。
+	2.调用预训练好的模型，进行微调。
 
